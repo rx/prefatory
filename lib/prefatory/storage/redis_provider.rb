@@ -24,6 +24,10 @@ module Prefatory
         @client.del(key)
       end
 
+      def key?(key)
+        @client.exists(key)
+      end
+
       def next_key(obj=nil)
         build_key(obj, @client.incr(build_key(obj, nil, @key_prefix)), @key_prefix)
       end

@@ -25,6 +25,11 @@ module Prefatory
         @client.delete(key)
       end
 
+      def key?(key)
+        v = @client.fetch(key){:does_not_exists}
+        v != :does_not_exists
+      end
+
       def next_key(obj=nil)
         build_key(obj, @client.incr(build_key(obj, nil, @key_prefix), 1, nil, 0), @key_prefix)
       end
