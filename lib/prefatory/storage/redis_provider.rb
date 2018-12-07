@@ -5,7 +5,7 @@ module Prefatory
     class RedisProvider
       include Prefatory::Keys
 
-      def initialize(options, ttl, key_prefix=nil)
+      def initialize(options=nil, ttl=nil, key_prefix=nil)
         options = default_settings(options)
         @ttl = ttl
         @key_prefix = key_prefix

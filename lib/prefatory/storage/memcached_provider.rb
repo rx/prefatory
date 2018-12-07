@@ -7,7 +7,7 @@ module Prefatory
       DEFAULT_SERVER = '127.0.0.1:11211'.freeze
       DEFAULT_OPTIONS = {namespace: 'prefatory', compress: true}
 
-      def initialize(options, ttl=nil, key_prefix=nil)
+      def initialize(options=nil, ttl=nil, key_prefix=nil)
         @ttl = ttl
         @key_prefix = key_prefix
         @client = Dalli::Client.new(default_servers(options), default_options(options))
@@ -42,7 +42,7 @@ module Prefatory
       end
 
       def default_options(options)
-        return options.except(:servers) if options
+        return options.select{|key| key!=:servers} if options
         DEFAULT_OPTIONS
       end
     end
