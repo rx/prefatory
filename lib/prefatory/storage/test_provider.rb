@@ -1,5 +1,3 @@
-require 'dalli'
-
 module Prefatory
   module Storage
     # Used by Specs. This is not safe for production (in any way!) You have been warned.
