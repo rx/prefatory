@@ -50,9 +50,9 @@ Redis:
 
 # default configuration:
     Prefatory.configure do |config|
-      configure.storage.engine = :redis
+      config.storage.provider = :redis
       # accepts any additional options redis-rb gem accepts          
-      configure.storage.options = {url: ENV['REDIS_URL']||Redis.current||'redis://127.0.0.1:0'}
+      config.storage.options = {url: ENV['REDIS_URL']||Redis.current||'redis://127.0.0.1:0'}
       config.ttl =  
     end
 
