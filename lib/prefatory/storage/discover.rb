@@ -12,7 +12,6 @@ module Prefatory
         require_relative "#{@provider}_provider"
         Object.const_get("Prefatory::Storage::#{@provider.to_s.capitalize}Provider").new(@config.options,
                                                                                          @ttl,
-                                                                                         @key_prefix,
                                                                                          marshaler: @config.marshaler)
       end
       private

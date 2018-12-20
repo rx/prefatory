@@ -6,11 +6,10 @@ module Prefatory
       DEFAULT_SERVER = '127.0.0.1:11211'.freeze
       DEFAULT_OPTIONS = {namespace: 'prefatory', compress: true, cache_nils: true}
 
-      def initialize(options = nil, ttl = nil, key_prefix = nil,
+      def initialize(options = nil, ttl = nil,
                      key_generator: Prefatory.config.keys.generator.new,
                      marshaler: Prefatory.config.storage.marshaler)
         @ttl = ttl
-        @key_prefix = key_prefix
         @key_generator = key_generator
         @marshaler = marshaler
         @client = Dalli::Client.new(default_servers(options), default_options(options))
