@@ -3,10 +3,9 @@ module Prefatory
     # Used by Specs. This is not safe for production (in any way!) You have been warned.
     class TestProvider
 
-      def initialize(ttl = nil,
+      def initialize(_ttl = nil,
                      key_generator:  Prefatory.config.keys.generator.new,
                      marshaler: Prefatory.config.storage.marshaler)
-        @ttl = ttl
         @hash = {}
         @key_generator = key_generator
         @marshaler = marshaler

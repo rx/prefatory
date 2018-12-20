@@ -6,7 +6,7 @@ module Prefatory
       KEY_PREFIX = 'prefatory'.freeze
 
 
-      def initialize(options=nil, ttl=nil,
+      def initialize(options=nil, ttl=Prefatory.config.ttl,
                      key_generator:  Prefatory.config.keys.generator.new(KEY_PREFIX),
                      marshaler: Prefatory.config.storage.marshaler)
         options = default_settings(options)

@@ -1,10 +1,9 @@
 module Prefatory
   module Storage
     class Discover
-      def initialize(config, ttl, key_prefix)
+      def initialize(config, ttl=Prefatory.config.ttl)
         @config = config
         @ttl = ttl
-        @key_prefix = key_prefix
         @provider = find_provider(config.provider)
       end
 
