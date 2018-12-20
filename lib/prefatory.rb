@@ -1,7 +1,6 @@
 require_relative "prefatory/version"
 require_relative 'prefatory/config'
 require_relative 'prefatory/errors'
-require_relative 'prefatory/keys'
 require_relative 'prefatory/storage/discover'
 
 module Prefatory
@@ -10,17 +9,14 @@ module Prefatory
     KEY_NOT_FOUND_MSG = "Unable to find the object with key ?"
 
     def initialize(key_prefix: nil, storage: nil,
-                   config: Prefatory.config,
-                   marshaler: Marshal)
+                   config: Prefatory.config)
       @config = config
       @storage = storage || Storage::Discover.new(@config.storage, @config.ttl, key_prefix).instance
-      @marshaler = marshaler
     end
 
     def find(key)
       return nil unless @storage.key?(key)
-      value = @storage.get(key)
-      @marshaler.load(value)
+      @storage.get(key)
     end
 
     def find!(key)
@@ -31,9 +27,8 @@ module Prefatory
 
     def save(obj, ttl=nil)
       begin
-        value = @marshaler.dump(obj)
         key = @storage.next_key(obj)
-        @storage.set(key, value, ttl)
+        @storage.set(key, obj, ttl)
       rescue StandardError => e
         logger.info("An error occurred (#{e.inspect}) storing object: #{obj.inspect}")
         key = nil
@@ -50,8 +45,7 @@ module Prefatory
 
     def update(key, obj, ttl=nil)
       return false unless @storage.key?(key)
-      value = @marshaler.dump(obj)
-      @storage.set(key, value, ttl)
+      @storage.set(key, obj, ttl)
       true
     end
 
@@ -72,8 +66,6 @@ module Prefatory
     end
 
     private
-
-    include Prefatory::Keys
 
     def logger
       @config.logger

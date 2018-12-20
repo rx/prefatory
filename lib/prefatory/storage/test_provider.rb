@@ -2,21 +2,23 @@ module Prefatory
   module Storage
     # Used by Specs. This is not safe for production (in any way!) You have been warned.
     class TestProvider
-      include Prefatory::Keys
 
-      def initialize(ttl = nil, key_prefix = nil)
+      def initialize(ttl = nil,
+                     key_generator:  Prefatory.config.keys.generator.new,
+                     marshaler: Prefatory.config.storage.marshaler)
         @ttl = ttl
-        @key_prefix = key_prefix
         @hash = {}
-        @next_key = 0
+        @key_generator = key_generator
+        @marshaler = marshaler
       end
 
-      def set(key, value, ttl=nil)
-        @hash.store(key, value)
+      def set(key, value, _ttl=nil)
+        @hash.store(key, @marshaler.dump(value))
       end
 
       def get(key)
-        @hash.fetch(key){nil}
+        value = @hash.fetch(key){nil}
+        value ? @marshaler.load(value) : value
       end
 
       def key?(key)
@@ -28,7 +30,7 @@ module Prefatory
       end
 
       def next_key(obj = nil)
-        build_key(obj, @next_key += 1, @key_prefix)
+        @key_generator.key(obj)
       end
     end
   end

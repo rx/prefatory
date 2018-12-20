@@ -113,4 +113,23 @@ RSpec.shared_examples 'prefatory_repository' do
       expect {repo.update!('does not exist', 'blah')}.to raise_error(Prefatory::Errors::NotFound)
     end
   end
+
+  describe :save_with_uuid do
+    class A
+      include Comparable
+      def primary_uuid
+        @primary_uuid ||= SecureRandom.hex
+      end
+      def <=>(other)
+        @primary_uuid <=> other.primary_uuid
+      end
+    end
+    it :saves do
+      o = A.new
+      k = repo.save(o)
+      expect(k).to eq(o.primary_uuid)
+      expect(repo.find(k)).to eq(o)
+      expect(repo.find(o.primary_uuid)).to eq(o)
+    end
+  end
 end

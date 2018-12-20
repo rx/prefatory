@@ -10,7 +10,10 @@ module Prefatory
 
       def instance
         require_relative "#{@provider}_provider"
-        Object.const_get("Prefatory::Storage::#{@provider.to_s.capitalize}Provider").new(@config.options, @ttl, @key_prefix)
+        Object.const_get("Prefatory::Storage::#{@provider.to_s.capitalize}Provider").new(@config.options,
+                                                                                         @ttl,
+                                                                                         @key_prefix,
+                                                                                         marshaler: @config.marshaler)
       end
       private
       def find_provider(provider)
