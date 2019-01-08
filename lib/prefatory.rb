@@ -11,7 +11,7 @@ module Prefatory
     def initialize(key_prefix: nil, storage: nil,
                    config: Prefatory.config)
       @config = config
-      @storage = storage || Storage::Discover.new(@config.storage, @config.ttl, key_prefix).instance
+      @storage = storage || Storage::Discover.new(@config.storage, @config.ttl).instance
     end
 
     def find(key)
@@ -51,6 +51,7 @@ module Prefatory
 
     def update!(key, obj, ttl=nil)
       raise Errors::NotFound, KEY_NOT_FOUND_MSG.sub('?',key) unless @storage.key?(key)
+
       update(key, obj, ttl)
     end
 
