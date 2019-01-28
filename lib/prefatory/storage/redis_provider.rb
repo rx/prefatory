@@ -3,11 +3,8 @@ require 'redis'
 module Prefatory
   module Storage
     class RedisProvider
-      KEY_PREFIX = 'prefatory'.freeze
-
-
       def initialize(options=nil, ttl=Prefatory.config.ttl,
-                     key_generator:  Prefatory.config.keys.generator.new(KEY_PREFIX),
+                     key_generator:  Prefatory.config.keys.generator.new(Prefatory.config.keys.prefix),
                      marshaler: Prefatory.config.storage.marshaler)
         options = default_settings(options)
         @ttl = ttl
@@ -45,7 +42,7 @@ module Prefatory
 
       def default_settings(options)
         return options if options&.fetch(:url){false} || options&.fetch(:host){false}
-        url = ENV['REDIS_PROVIDER'] || ENV['REDIS_URL']
+        url = ENV['REDIS_PROVIDER'] || ENV['REDIS_URL'] || ENV['REDIS_SERVER']
         if (url)
           options ||= {}
           options = options.merge(url: url)

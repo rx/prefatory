@@ -4,7 +4,7 @@ module Prefatory
   module Storage
     class MemcachedProvider
       DEFAULT_SERVER = '127.0.0.1:11211'.freeze
-      DEFAULT_OPTIONS = {namespace: 'prefatory', compress: true, cache_nils: true}
+      DEFAULT_OPTIONS = {namespace: Prefatory.config.keys.prefix, compress: true, cache_nils: true}
 
       def initialize(options = nil, ttl = nil,
                      key_generator: Prefatory.config.keys.generator.new,

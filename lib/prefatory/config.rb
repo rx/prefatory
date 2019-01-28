@@ -8,6 +8,7 @@ module Prefatory
   setting :ttl, 86400 # in seconds - defaults to one day
   setting     :keys do
     setting :generator, Prefatory::KeyGenerator
+    setting :prefix, 'prefatory'
     # If the object being stored responds to :entity_primary_key and that value is not null,
     # it is assumed to be a universally unique primary key for the object.
     # The default key_generator will use it

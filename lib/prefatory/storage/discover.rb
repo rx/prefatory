@@ -1,3 +1,5 @@
+require 'prefatory/config'
+
 module Prefatory
   module Storage
     class Discover
@@ -11,9 +13,14 @@ module Prefatory
         require_relative "#{@provider}_provider"
         Object.const_get("Prefatory::Storage::#{@provider.to_s.capitalize}Provider").new(@config.options,
                                                                                          @ttl,
-                                                                                         marshaler: @config.marshaler)
+                                                                                         marshaler: marshaler)
       end
       private
+
+      def marshaler
+        @config.respond_to?(:marshaler) ? @config.marshaler : Marshal
+      end
+
       def find_provider(provider)
         return provider if provider
         return :redis if defined?(Redis)
