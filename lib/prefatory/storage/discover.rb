@@ -1,4 +1,5 @@
 require 'prefatory/config'
+require 'prefatory/errors'
 
 module Prefatory
   module Storage
