@@ -26,9 +26,11 @@ Or install it yourself as:
 ## Usage
 
 To store and retrieve an entity/model/value/hash/array:
-
-    foo_key = Prefatory.save(foo)      
-    foo = Prefatory.find(foo_key)
+    
+    pref = Prefatory::Repository.new
+    foo = OpenStruct.new(hello: "world")
+    foo_key = pref.save(foo)
+    foo = pref.find(foo_key)
   
 Save returns nil if the save was unable to save the entity/model/value/hash/array. Find returns nil of the key could not be found.
    
