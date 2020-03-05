@@ -4,10 +4,11 @@ module Prefatory
     # only ephemeral storage is required
     class HashProvider
       def initialize(
-          options = nil,
-          ttl = nil,
-          key_generator: Prefatory.config.keys.generator.new
-        )
+        options = nil,
+        ttl = Prefatory.config.ttl,
+        key_generator: Prefatory.config.keys.generator.new,
+        marshaler: Prefatory.config.storage.marshaler
+      )
         @hash = {}
         @key_generator = key_generator
       end

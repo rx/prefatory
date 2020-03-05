@@ -6,9 +6,12 @@ module Prefatory
       DEFAULT_SERVER = '127.0.0.1:11211'.freeze
       DEFAULT_OPTIONS = {namespace: Prefatory.config.keys.prefix, compress: true, cache_nils: true}
 
-      def initialize(options = nil, ttl = nil,
-                     key_generator: Prefatory.config.keys.generator.new,
-                     marshaler: Prefatory.config.storage.marshaler)
+      def initialize(
+        options = nil,
+        ttl = Prefatory.config.ttl,
+        key_generator: Prefatory.config.keys.generator.new,
+        marshaler: Prefatory.config.storage.marshaler
+      )
         @ttl = ttl
         @key_generator = key_generator
         @marshaler = marshaler
