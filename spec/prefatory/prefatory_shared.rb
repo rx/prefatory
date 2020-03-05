@@ -33,7 +33,6 @@ RSpec.shared_examples 'prefatory_repository' do
       it :saves do
         # Built in types with some random data
         built_in_types.each do |k, v|
-          puts k
           key = repo.save(v)
           expect(repo.find(key)).to eq(v)
         end
@@ -54,7 +53,6 @@ RSpec.shared_examples 'prefatory_repository' do
       it :updates do
         # Built in types with some random data
         built_in_types.each do |k, v|
-          puts "#{k}"
           key = repo.save(v)
           v2 = random_data
           repo.update(key, v2)
@@ -69,7 +67,6 @@ RSpec.shared_examples 'prefatory_repository' do
       it :saves do
         # Built in types with some random data
         built_in_types.each do |k, v|
-          puts "#{k}"
           key = repo.save!(v)
           expect(repo.find!(key)).to eq(v)
         end

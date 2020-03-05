@@ -10,7 +10,7 @@ module Prefatory
 
     def initialize(key_prefix: nil, storage: nil,
                    config: Prefatory.config)
-      @config = config
+      @config = config.dup
       @config.keys.prefix = key_prefix if key_prefix
       @storage = storage || Storage::Discover.new(@config.storage, @config.ttl).instance
     end
