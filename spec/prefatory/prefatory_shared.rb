@@ -1,7 +1,7 @@
 require 'bigdecimal'
 
 RSpec.shared_examples 'prefatory_repository' do
-  MAX_INT = (2 ** (0.size * 8 - 2) - 1)
+  MAX_INT ||= (2 ** (0.size * 8 - 2) - 1)
   class Foo
     attr_reader :data
 
@@ -21,7 +21,7 @@ RSpec.shared_examples 'prefatory_repository' do
                          String => (0...8).map {(65 + rand(26)).chr}.join,
                          Integer => rand(0..MAX_INT),
                          Float => rand(Float::MIN..Float::MAX),
-                         BigDecimal => BigDecimal.new(rand(Float::MIN..Float::MAX), 0),
+                         BigDecimal => BigDecimal(rand(Float::MIN..Float::MAX), 0),
                          Array => Array.new(rand(0...9)) {rand(0...9)},
                          Hash => Array.new(rand(0...9)) {[rand(0...9), rand(0...9)]}.to_h
   }}
