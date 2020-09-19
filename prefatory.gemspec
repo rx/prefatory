@@ -23,7 +23,7 @@ Gem::Specification.new do |spec|
   spec.bindir        = "exe"
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
-  spec.add_dependency "dry-configurable", "~> 0.11.3"
+  spec.add_dependency "dry-configurable", "~> 0.7.0"
 
   spec.add_development_dependency "redis"
   spec.add_development_dependency "dalli"

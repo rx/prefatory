@@ -11,6 +11,15 @@ RSpec.describe Prefatory do
     expect(Prefatory::VERSION).not_to be nil
   end
 
+  context 'with a key_prefix' do
+    it 'does not mutate the global config key_prefix' do
+      initial_key_prefix = Prefatory.config.keys.prefix
+
+      Prefatory::Repository.new(storage: storage, key_prefix: 'foo')
+      expect(Prefatory.config.keys.prefix).to eq(initial_key_prefix)
+    end
+  end
+
   describe :save! do
     let(:storage) do
       s = Prefatory::Storage::TestProvider.new
@@ -27,4 +36,3 @@ RSpec.describe Prefatory do
     end
   end
 end
-
