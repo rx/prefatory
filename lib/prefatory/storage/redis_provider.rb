@@ -3,9 +3,12 @@ require 'redis'
 module Prefatory
   module Storage
     class RedisProvider
-      def initialize(options=nil, ttl=Prefatory.config.ttl,
-                     key_generator:  Prefatory.config.keys.generator.new(Prefatory.config.keys.prefix),
-                     marshaler: Prefatory.config.storage.marshaler)
+      def initialize(
+          options = nil,
+          ttl = Prefatory.config.ttl,
+          key_generator: Prefatory.config.keys.generator.new,
+          marshaler: Prefatory.config.storage.marshaler
+      )
         options = default_settings(options)
         @ttl = ttl
         @key_generator = key_generator

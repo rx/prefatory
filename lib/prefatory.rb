@@ -10,9 +10,13 @@ module Prefatory
 
     def initialize(key_prefix: nil, storage: nil,
                    config: Prefatory.config)
-      @config = config
-      @config.keys.prefix = key_prefix if key_prefix
-      @storage = storage || Storage::Discover.new(@config.storage, @config.ttl).instance
+      @config = config.dup
+      @key_prefix = key_prefix || @config.keys.prefix
+      @storage = storage || Storage::Discover.new(
+          @config.storage,
+          @config.ttl,
+          key_prefix: @key_prefix
+      ).instance
     end
 
     def find(key)
